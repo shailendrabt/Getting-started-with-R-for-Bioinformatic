@@ -20,3 +20,8 @@
 ### use seq() function
 > seq(from = 1, to = 10, by= 1)
  [1]  1  2  3  4  5  6  7  8  9 10
+              or
+###seq() function
+> x <- seq(from = 1, to = 10, by= 1)
+> x
+ [1]  1  2  3  4  5  6  7  8  9 10
