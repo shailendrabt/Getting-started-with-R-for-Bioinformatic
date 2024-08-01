@@ -48,3 +48,22 @@ ggplot(compensation, aes(x = Fruit))+
   geom_histogram(bins = 30)
 ggplot(compensation, aes(x = Fruit))+
   geom_histogram(binwidth = 15)
+
+ggplot(compensation, aes(x = Grazing, y = Fruit)) +
+  geom_boxplot() +
+  geom_point(size = 4, colour = "blue", alpha = 0.5) +
+  xlab("Grazing treatment") +
+  ylab("Fruit Production") +
+  theme_bw()
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram()
+
+ggplot(compensation, aes(x = Fruit)) +
+  geom_histogram(bins = 10)
+
+ggplot(compensation, aes( x = Fruit)) +
+  geom_histogram(binwidth = 15)
+
+ggplot(compensation, aes( x = Fruit)) +
+  geom_histogram(binwidth = 15)
+facet_wrap(~Grazing)
