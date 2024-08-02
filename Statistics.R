@@ -24,3 +24,6 @@ ggplot(total, aes(x = Habitat, y = total.number,
 lady.mat <- xtabs(number ~ Habitat + morph_colour,
                   data = lady)
 lady.mat
+chisq.test(lady.mat)
+lady.chi <- chisq.test(lady.mat)
+names(lady.chi)
