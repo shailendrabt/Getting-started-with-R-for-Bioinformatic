@@ -39,29 +39,55 @@ ggplot(ozone, aes(x = Ozone)) +
   geom_histogram(binwidth = 10) +
   facet_wrap(~ Garden.location, ncol = 1) +
   theme_bw()
-> t.test(Ozone ~ Garden.location, data = ozone)
-output #[] Welch Two Sample t-test
+t.test(Ozone ~ Garden.location, data = ozone)
+ var.test(Ozone ~ Garden.location, data = ozone)
 
-data:  Ozone by Garden.location
-t = 4.2363, df = 17.656, p-value = 0.0005159
-alternative hypothesis: true difference in means between group East and group West is not equal to 0
-95 percent confidence interval:
-  8.094171 24.065829
-sample estimates:
-mean in group East mean in group West 
-             77.34              61.26 
+                                 ####getting and plotting the data 
+plant_gr <- read.csv("plant.growth.rate.csv")
+glimpse(plant_gr)
+####making a simple linear regression 
+ggplot(plant_gr, 
+       aes(x= soil.moisture.content, y = plant.growth.rate)) +
+           geom_point() +
+  ylab("Plant Growth Rate mm/week)") +
+  theme_bw()
+getwd()
+model_pgr <- lm(plant.growth.rate ~ soil.moisture.content, data = plant_gr)
+library(ggfortify)
+install.packages("ggfortify")
+autoplot(model_pgr, smooth.colour = NA)
+anova(model_pgr)
+summary(model_pgr)
+
+ggplot(plant_gr, aes(x = soil.moisture.content,
+                     y = plant.growth.rate)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  ylab("Plant Growth Rate (mm/week)")
 
 
-> var.test(Ozone ~ Garden.location, data = ozone)
+####analysis of variance: the one way ANOVA 
+ daphnia <- read.csv("Daphniagrowth.csv")
+glimpse(daphnia) 
+ggplot(daphnia, aes(x = parasite, y = growth.rate)) +
+  geom_boxplot() +
+  theme_bw()
+####visualize categorical data
+ggplot(daphnia, aes(x = parasite, y = growth.rate)) +
+  geom_boxplot() +
+  theme_bw()
+coord_flip()
+### construct the ANOVA
+model_grow <- lm(growth.rate ~ parasite, data = daphnia)
+####check the assumption
+ autoplot(model_grow, smooth.colour = NA)
+anova(model_grow)
+summary.aov(model_grow)
 
-output (##	F test to compare two variances
 
-data:  Ozone by Garden.location
-F = 0.75503, num df = 9, denom df = 9, p-value = 0.6823
-alternative hypothesis: true ratio of variances is not equal to 1
-95 percent confidence interval:
- 0.1875386 3.0397437
-sample estimates:
-ratio of variances 
-         0.7550293 )
+####get  the mean growth rate
+sumDat <- daphnia %>%
+group_by(parasite) %>%
+  summarise(meanGR = mean(growth.rate))
+sumDat
 
